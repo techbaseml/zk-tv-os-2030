@@ -8,7 +8,10 @@ Date: 2026-11-18. Target: Amazon AFTSS/sheldon, Android 9/API 28, PS7717.5746N.
 | Device version | PASS, user supplied | Android 9, SDK 28, PS7717.5746N |
 | Original HOME resolution | PASS, user supplied | Amazon HomeActivity_vNext |
 | Original Home recovery before install | PASS, user observed | TV returned from Settings to Amazon Home |
-| Build / static lint | PENDING | Update after actual build |
+| Local APK build | PASS | Gradle 8.9, assembleDebug; BUILD SUCCESSFUL |
+| Static lint | PASS with warnings | 0 errors, 7 warnings (vector banner, TV orientation, drawing allocations) |
+| APK signature | PASS | apksigner verified v2 signing; debug test certificate |
+| APK metadata | PASS | com.zklabs.tvos; version 0.1.0-device-test; min/target SDK 28 |
 | Installation | NOT RUN | Requires approval and local ADB |
 | Startup/rendering | NOT RUN | Check clipping, text, icons on the actual TV |
 | D-pad and Back/Menu | NOT RUN | Reach every card and setting without touch |
@@ -31,3 +34,13 @@ Date: 2026-11-18. Target: Amazon AFTSS/sheldon, Android 9/API 28, PS7717.5746N.
 This is a device-test build. It must not be described as fully working or complete
 until the supported rows pass on the actual device. Build/lint success alone is
 not proof of correct TV rendering, remote navigation, or performance.
+
+## Local artifact verification
+
+APK SHA-256: `71d8da9bec1a0301c679c7e0715d43264713b0e129d59a039f4c80c2a76cc4e0`
+
+Size: 2,418,107 bytes. Debug certificate SHA-256: `0e35647f8e42d2576f4eb940ea5246fecd0891d8fe9327a73ff6cc1cfb353364`.
+
+Local build used OpenJDK 21; Java/Kotlin bytecode targets 17. CI uses JDK 17.
+The lint warnings are not device-performance measurements. Drawing allocations
+should be revisited if the real-device frame tests indicate jank.
